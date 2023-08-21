@@ -39,5 +39,17 @@ namespace SchoolManager.Views
             this.Hide();
             new Workspace().Show();
         }
+
+        private void btnStudents_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new Students().ShowDialog(); 
+        }
+
+        private void btnAttendant_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new Attendant().ShowDialog();
+        }
     }
 }

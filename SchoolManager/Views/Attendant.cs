@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SchoolManager.Controllers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +13,7 @@ namespace SchoolManager.Views
 {
     public partial class Attendant : Workspace
     {
+        Service service = new Service();
         public Attendant()
         {
             InitializeComponent();
@@ -19,7 +21,16 @@ namespace SchoolManager.Views
 
         private void Attendant_Load(object sender, EventArgs e)
         {
+            FillClassCombo();
+        }
 
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            new AttendantSettings().ShowDialog();
+        }
+        private void FillClassCombo()
+        {
+            service.FillClassCombo(ref cmbClass);
         }
     }
 }

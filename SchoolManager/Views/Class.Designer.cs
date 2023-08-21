@@ -215,7 +215,7 @@
             // colClass
             // 
             this.colClass.DataPropertyName = "Name";
-            this.colClass.FillWeight = 189.8439F;
+            this.colClass.FillWeight = 179.9663F;
             this.colClass.HeaderText = "Turma";
             this.colClass.Name = "colClass";
             this.colClass.ReadOnly = true;
@@ -223,14 +223,14 @@
             // colTerm
             // 
             this.colTerm.DataPropertyName = "TermDescription";
-            this.colTerm.FillWeight = 189.8439F;
+            this.colTerm.FillWeight = 179.9663F;
             this.colTerm.HeaderText = "Período";
             this.colTerm.Name = "colTerm";
             this.colTerm.ReadOnly = true;
             // 
             // colEdit
             // 
-            this.colEdit.FillWeight = 10.15228F;
+            this.colEdit.FillWeight = 19.76277F;
             this.colEdit.HeaderText = "";
             this.colEdit.Image = ((System.Drawing.Image)(resources.GetObject("colEdit.Image")));
             this.colEdit.Name = "colEdit";
@@ -238,7 +238,7 @@
             // 
             // colDelete
             // 
-            this.colDelete.FillWeight = 10.1598F;
+            this.colDelete.FillWeight = 20.30456F;
             this.colDelete.HeaderText = "";
             this.colDelete.Image = ((System.Drawing.Image)(resources.GetObject("colDelete.Image")));
             this.colDelete.Name = "colDelete";

@@ -63,8 +63,10 @@
     </Compile>
     <Compile Include="Controllers\Database.cs" />
     <Compile Include="Controllers\Service.cs" />
+    <Compile Include="Models\AttendantData.cs" />
     <Compile Include="Models\Classroom.cs" />
     <Compile Include="Models\GenericClass.cs" />
+    <Compile Include="Models\Student.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\Attendant.cs">
@@ -72,6 +74,12 @@
     </Compile>
     <Compile Include="Views\Attendant.Designer.cs">
       <DependentUpon>Attendant.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AttendantSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\AttendantSettings.Designer.cs">
+      <DependentUpon>AttendantSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Class.cs">
       <SubType>Form</SubType>
@@ -97,6 +105,12 @@
     <Compile Include="Views\Students.Designer.cs">
       <DependentUpon>Students.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\StudentSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\StudentSettings.Designer.cs">
+      <DependentUpon>StudentSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Workspace.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,6 +130,9 @@
     <EmbeddedResource Include="Views\Attendant.resx">
       <DependentUpon>Attendant.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\AttendantSettings.resx">
+      <DependentUpon>AttendantSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Class.resx">
       <DependentUpon>Class.cs</DependentUpon>
     </EmbeddedResource>
@@ -127,6 +144,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Students.resx">
       <DependentUpon>Students.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\StudentSettings.resx">
+      <DependentUpon>StudentSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Workspace.resx">
       <DependentUpon>Workspace.cs</DependentUpon>

@@ -30,20 +30,19 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Workspace));
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tsbExit = new System.Windows.Forms.ToolStripButton();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.btnTasks = new System.Windows.Forms.Button();
             this.btnAttendant = new System.Windows.Forms.Button();
             this.btnClass = new System.Windows.Forms.Button();
             this.btnStudents = new System.Windows.Forms.Button();
             this.btnHome = new System.Windows.Forms.Button();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tsbExit = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel10
@@ -53,7 +52,6 @@
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel10.Controls.Add(this.pictureBox2, 0, 0);
             this.tableLayoutPanel10.Controls.Add(this.panel2, 0, 2);
-            this.tableLayoutPanel10.Controls.Add(this.btnTasks, 0, 7);
             this.tableLayoutPanel10.Controls.Add(this.btnAttendant, 0, 6);
             this.tableLayoutPanel10.Controls.Add(this.btnClass, 0, 5);
             this.tableLayoutPanel10.Controls.Add(this.btnStudents, 0, 4);
@@ -76,6 +74,18 @@
             this.tableLayoutPanel10.Size = new System.Drawing.Size(199, 729);
             this.tableLayoutPanel10.TabIndex = 38;
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox2.Image = global::SchoolManager.Properties.Resources.SchoolManagerLogo;
+            this.pictureBox2.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(193, 94);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 0;
+            this.pictureBox2.TabStop = false;
+            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.label1);
@@ -94,66 +104,6 @@
             this.label1.Size = new System.Drawing.Size(61, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "Módulos";
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.AutoSize = false;
-            this.toolStrip1.BackColor = System.Drawing.Color.White;
-            this.toolStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbExit});
-            this.toolStrip1.Location = new System.Drawing.Point(199, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStrip1.Size = new System.Drawing.Size(1151, 46);
-            this.toolStrip1.TabIndex = 40;
-            // 
-            // tsbExit
-            // 
-            this.tsbExit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tsbExit.BackColor = System.Drawing.Color.Transparent;
-            this.tsbExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbExit.Image = ((System.Drawing.Image)(resources.GetObject("tsbExit.Image")));
-            this.tsbExit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tsbExit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbExit.Margin = new System.Windows.Forms.Padding(10, 1, 10, 2);
-            this.tsbExit.Name = "tsbExit";
-            this.tsbExit.Size = new System.Drawing.Size(28, 43);
-            this.tsbExit.ToolTipText = "Bloco de notas";
-            this.tsbExit.Click += new System.EventHandler(this.tsbExit_Click);
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox2.Image = global::SchoolManager.Properties.Resources.SchoolManagerLogo;
-            this.pictureBox2.Location = new System.Drawing.Point(3, 3);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(193, 94);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 0;
-            this.pictureBox2.TabStop = false;
-            // 
-            // btnTasks
-            // 
-            this.btnTasks.BackColor = System.Drawing.Color.Transparent;
-            this.btnTasks.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnTasks.FlatAppearance.BorderSize = 0;
-            this.btnTasks.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.btnTasks.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTasks.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTasks.ForeColor = System.Drawing.Color.White;
-            this.btnTasks.Image = ((System.Drawing.Image)(resources.GetObject("btnTasks.Image")));
-            this.btnTasks.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTasks.Location = new System.Drawing.Point(3, 313);
-            this.btnTasks.Name = "btnTasks";
-            this.btnTasks.Size = new System.Drawing.Size(193, 38);
-            this.btnTasks.TabIndex = 47;
-            this.btnTasks.Text = "      Tarefas";
-            this.btnTasks.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnTasks.UseMnemonic = false;
-            this.btnTasks.UseVisualStyleBackColor = false;
             // 
             // btnAttendant
             // 
@@ -174,6 +124,7 @@
             this.btnAttendant.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAttendant.UseMnemonic = false;
             this.btnAttendant.UseVisualStyleBackColor = false;
+            this.btnAttendant.Click += new System.EventHandler(this.btnAttendant_Click);
             // 
             // btnClass
             // 
@@ -215,6 +166,7 @@
             this.btnStudents.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnStudents.UseMnemonic = false;
             this.btnStudents.UseVisualStyleBackColor = false;
+            this.btnStudents.Click += new System.EventHandler(this.btnStudents_Click);
             // 
             // btnHome
             // 
@@ -237,6 +189,34 @@
             this.btnHome.UseVisualStyleBackColor = false;
             this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.AutoSize = false;
+            this.toolStrip1.BackColor = System.Drawing.Color.White;
+            this.toolStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbExit});
+            this.toolStrip1.Location = new System.Drawing.Point(199, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.toolStrip1.Size = new System.Drawing.Size(1151, 46);
+            this.toolStrip1.TabIndex = 40;
+            // 
+            // tsbExit
+            // 
+            this.tsbExit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsbExit.BackColor = System.Drawing.Color.Transparent;
+            this.tsbExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbExit.Image = ((System.Drawing.Image)(resources.GetObject("tsbExit.Image")));
+            this.tsbExit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsbExit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbExit.Margin = new System.Windows.Forms.Padding(10, 1, 10, 2);
+            this.tsbExit.Name = "tsbExit";
+            this.tsbExit.Size = new System.Drawing.Size(28, 43);
+            this.tsbExit.ToolTipText = "Bloco de notas";
+            this.tsbExit.Click += new System.EventHandler(this.tsbExit_Click);
+            // 
             // Workspace
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -251,11 +231,11 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Workspace_Load);
             this.tableLayoutPanel10.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -269,7 +249,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnAttendant;
-        private System.Windows.Forms.Button btnTasks;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton tsbExit;
         private System.Windows.Forms.Button btnHome;

@@ -17,3 +17,5 @@ C:\Users\Leonardo Leal\source\repos\SchoolManager\SchoolManager\obj\Debug\School
 C:\Users\Leonardo Leal\source\repos\SchoolManager\SchoolManager\obj\Debug\SchoolManager.exe
 C:\Users\Leonardo Leal\source\repos\SchoolManager\SchoolManager\obj\Debug\SchoolManager.pdb
 C:\Users\Leonardo Leal\source\repos\SchoolManager\SchoolManager\obj\Debug\SchoolManager.Views.Attendant.resources
+C:\Users\Leonardo Leal\source\repos\SchoolManager\SchoolManager\obj\Debug\SchoolManager.Views.StudentSettings.resources
+C:\Users\Leonardo Leal\source\repos\SchoolManager\SchoolManager\obj\Debug\SchoolManager.Views.AttendantSettings.resources
