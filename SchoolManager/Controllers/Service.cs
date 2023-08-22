@@ -222,28 +222,39 @@ namespace SchoolManager.Controllers
                 return null;
             }
         }
-        /* public List<AttendantData> LoadAllAttendantsData(AttendantData attendant)
+        public List<AttendantData> LoadAllAttendantData(AttendantData attendant, bool IsDateActive)
          {
              try
              {
-                 return database.LoadAllAttendantsData(attendant);
+                 return database.LoadAllAttendantData(attendant, IsDateActive);
              }
-             catch
-             {
-                 MessageBox.Show("Houve um Erro no Método 'LoadAllAttendantsData'", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+             catch (Exception ex)
+            {
+                 MessageBox.Show($"Houve um Erro no Método 'LoadAllAttendantData': \n {ex}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                  return null;
              }
-        }*/
+        }
         public List<AttendantData> GetStudents(int attendantId)
         {
             try
             {
                 return database.GetStudents(attendantId);
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Houve um Erro no Método 'GetStudents': \n {ex}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
+        public void AttendantCheck(AttendantData attendant)
+        {
+            try
+            {
+                database.AttendantCheck(attendant);
+            }
             catch
             {
-                MessageBox.Show("Houve um Erro no Método 'GetStudents'", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return null;
+                MessageBox.Show("Houve um Erro no Método 'AttendantCheck'", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

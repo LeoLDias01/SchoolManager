@@ -233,21 +233,21 @@ namespace SchoolManager.Controllers
         {
             using (var conn = new SqlConnection(sqlConnection))
             {
-                return conn.QuerySingle<string>($@"UPDATE STUDENT 
-                                                   SET TITLE = @TITLE, DATE_OF_ATTENDANT = @DATE_OF_ATTENDANT, ID_CLASS = @ID_CLASS, OBSERVATIONS = @OBSERVATIONS
+                return conn.QuerySingle<string>($@"UPDATE ATTENDANT 
+                                                   SET TITLE = @TITLE, DATE_OF_ATTENDANT = @DATE_OF_ATTENDANT,  OBSERVATIONS = @OBSERVATIONS
                                                    WHERE ID_ATTENDANT = @ID AND ACTIVE = 1
                                                    
                                                    SELECT 'Alterado com Sucesso!'   ",
-                param: new { ID = attendant.Id, TITLE = attendant.Title, DATE_OF_ATTENDANT = attendant.DateOfAttendant,ID_CLASS = attendant.ClassId, OBSERVATIONS = attendant.Observation });
+                param: new { ID = attendant.Id, TITLE = attendant.Title, DATE_OF_ATTENDANT = attendant.DateOfAttendant, OBSERVATIONS = attendant.Observation });
             }
         }
         public string AttendantDelete(int studentId)
         {
             using (var conn = new SqlConnection(sqlConnection))
             {
-                return conn.QuerySingle<string>($@"UPDATE STUDENT 
+                return conn.QuerySingle<string>($@"UPDATE ATTENDANT 
                                                    SET ACTIVE = 0
-                                                   WHERE ID_STUDENT = @ID AND ACTIVE = 1
+                                                   WHERE ATTENDANT = @ID AND ACTIVE = 1
                                                    
                                                    SELECT 'Excluído com Sucesso!'   ",
                 param: new { ID = studentId });
@@ -270,37 +270,36 @@ namespace SchoolManager.Controllers
                     }).ToList();
             }
         }
-        /*public List<AttendantData> LoadAllAttendantsData(AttendantData attendantt)
+        public List<AttendantData> LoadAllAttendantData(AttendantData attendant, bool IsDateActive)
         {
             using (var conn = new SqlConnection(sqlConnection))
             {
-                string sql = $@"SELECT STD.ID_STUDENT, STD.NAME_STUDENT, STD.CPF, STD.AGE, STD.BIRTH, CLS.CLASS, STD.OBSERVATIONS
-                                FROM STUDENT		STD WITH(NOLOCK)
-                                INNER JOIN CLASS	CLS WITH(NOLOCK) ON CLS.ID_CLASS = STD.ID_CLASS
-                                WHERE STD.ACTIVE = 1";
-                if (student.Name.Length > 1)
-                    sql += $"AND STD.NAME_STUDENT = '{student.Name}'";
-                if (student.CPF.Length > 1)
-                    sql += $"AND STD.CPF = '{student.CPF}'";
-                if (student.ClassId > 1)
-                    sql += $"AND CLS.ID_CLASS = {student.ClassId}";
+                string sql = $@"SELECT ATD.ID_ATTENDANT, ATD.DATE_OF_ATTENDANT, ATD.TITLE, CLS.CLASS
+                                FROM ATTENDANT_STUDENT ATS
+                                INNER JOIN ATTENDANT ATD ON ATD.ID_ATTENDANT = ATS.ID_ATTENDANT
+                                INNER JOIN CLASS CLS ON CLS.ID_CLASS = ATD.ID_CLASS
+                                WHERE ATD.ACTIVE = 1 ";
+                if (attendant.ClassId > 0)
+                    sql += $"AND ATD.ID_CLASS = {attendant.ClassId} ";
+                if (IsDateActive == true)
+                    sql += $"AND ATD.DATE_OF_ATTENDANT BETWEEN '{attendant.DateInitial.ToString("yyyy-MM-dd")}' AND '{attendant.DateFinal.ToString("yyyy-MM-dd")}' ";
+                if (attendant.Title.Length > 0)
+                    sql += $"AND ATD.TITLE = '{attendant.Title}' ";
+                
 
-                sql += "ORDER BY STD.NAME_STUDENT ASC";
+                sql += "ORDER BY ATD.DATE_OF_ATTENDANT ASC";
 
 
                 return conn.Query(sql)
                     .Select(x => new AttendantData
                     {
-                        Id = x.ID_STUDENT,
-                        Name = x.NAME_STUDENT,
-                        CPF = x.CPF,
-                        Age = x.AGE,
-                        Birth = x.BIRTH,
-                        ClassDescription = x.CLASS,
-                        Observation = x.OBSERVATIONS,
+                        Id = x.ID_ATTENDANT,
+                        DateOfAttendant = x.DATE_OF_ATTENDANT,
+                        Title = x.TITLE,
+                        ClassDescription = x.CLASS
                     }).ToList();
             }
-        }*/
+        }
         public List<AttendantData> GetStudents(int AttendantId)
         {
             using (var conn = new SqlConnection(sqlConnection))
@@ -318,6 +317,21 @@ namespace SchoolManager.Controllers
                         Student = x.NAME_STUDENT,
                         IsHere = x.IS_HERE
                     }).ToList();
+            }
+        }
+        public void AttendantCheck(AttendantData attendant)
+        {
+            using (var conn = new SqlConnection(sqlConnection))
+            {
+                conn.Query($@"IF(SELECT IS_HERE FROM ATTENDANT_STUDENT WHERE ID_ATTENDANT_STUDENT = @ID AND ID_STUDENT = @ID_STUDENT ) = 1
+							 UPDATE ATTENDANT_STUDENT 
+                              SET IS_HERE = 0
+                              WHERE ID_ATTENDANT_STUDENT = @ID AND ID_STUDENT = @ID_STUDENT  
+							 ELSE
+							 UPDATE ATTENDANT_STUDENT 
+                              SET IS_HERE = 1
+                              WHERE ID_ATTENDANT_STUDENT = @ID AND ID_STUDENT = @ID_STUDENT",
+                param: new { ID = attendant.IdAttendantStudent, ID_STUDENT = attendant.IdStudent});
             }
         }
         #endregion

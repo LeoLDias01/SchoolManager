@@ -1,0 +1,231 @@
+CREATE DATABASE SCHOOL_MANAGER
+
+USE SCHOOL_MANAGER
+
+
+CREATE TABLE USERS
+(
+	ID_USER INT PRIMARY KEY  IDENTITY(1,1),
+	EMAIL VARCHAR(MAX),
+	PASSWORD_USER VARCHAR(MAX),
+	ACTIVE BIT DEFAULT(1)
+);
+
+INSERT INTO USERS (EMAIL, PASSWORD_USER) VALUES ('teste@teste.com', '1234');
+
+CREATE TABLE TERM
+(
+	ID_TERM INT PRIMARY KEY  IDENTITY(1,1),
+	DESCRIPTION_TERM VARCHAR(MAX),
+	ACTIVE BIT DEFAULT(1)
+);
+INSERT INTO TERM (DESCRIPTION_TERM) VALUES ('Manhã'), ('Tarde'), ('Noite');
+
+CREATE TABLE CLASS
+(
+	ID_CLASS INT PRIMARY KEY  IDENTITY(1,1),
+	CLASS VARCHAR(MAX),
+	ID_TERM INT,
+	ACTIVE BIT DEFAULT(1)
+);
+
+ALTER TABLE CLASS
+ADD CONSTRAINT FK_ID_TERM FOREIGN KEY (ID_TERM) REFERENCES TERM(ID_TERM);
+
+CREATE TABLE STUDENT
+(
+	ID_STUDENT INT PRIMARY KEY  IDENTITY(1,1),
+	NAME_STUDENT VARCHAR(MAX),
+	CPF VARCHAR(MAX),
+	AGE INT,
+	BIRTH DATE,
+	ID_CLASS INT,
+	OBSERVATIONS VARCHAR(MAX),
+	ACTIVE BIT DEFAULT(1)
+);
+
+ALTER TABLE STUDENT
+ADD CONSTRAINT FK_ID_CLASS FOREIGN KEY (ID_CLASS) REFERENCES CLASS(ID_CLASS);
+
+CREATE TABLE ATTENDANT
+(
+	ID_ATTENDANT INT PRIMARY KEY  IDENTITY(1,1),
+	TITLE VARCHAR(MAX),
+	DATE_OF_ATTENDANT DATE,
+	ID_CLASS INT,
+	OBSERVATIONS VARCHAR(MAX),
+	ACTIVE BIT DEFAULT(1)
+);
+
+CREATE TABLE ATTENDANT_STUDENT
+(
+	ID_ATTENDANT_STUDENT INT PRIMARY KEY  IDENTITY(1,1),
+	ID_ATTENDANT INT,
+	ID_STUDENT INT,
+	IS_HERE BIT,
+);
+
+ALTER TABLE ATTENDANT
+ADD CONSTRAINT FK_ID_CLASS_ATTENDANT FOREIGN KEY (ID_CLASS) REFERENCES CLASS(ID_CLASS);
+
+ALTER TABLE ATTENDANT_STUDENT
+ADD CONSTRAINT FK_ID_ATTENDANT FOREIGN KEY (ID_ATTENDANT) REFERENCES ATTENDANT(ID_ATTENDANT);
+
+
+ALTER TABLE STUDENT
+ADD CONSTRAINT FK_ID_STUDENT FOREIGN KEY (ID_STUDENT) REFERENCES STUDENT(ID_STUDENT);
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* _________________________________  PROCEDURES _______________________________________________________________ */
+
+------------------------------------------------------------------------------------------------------------------
+
+USE [SCHOOL_MANAGER]
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Leonardo Leal
+-- Create date: <08/11/2023>
+-- Description:	VALIDATION TO USER DATA
+-- =============================================
+CREATE PROCEDURE [PRC_USER_DATA_CHECK]
+(
+	@USERNAME VARCHAR(MAX),
+	@PASSWORD VARCHAR(MAX)
+)
+AS
+BEGIN
+
+	IF EXISTS (SELECT ID_USER FROM USERS WHERE EMAIL= @USERNAME AND PASSWORD_USER = @PASSWORD AND ACTIVE = 1)
+
+			SELECT CAST(1 AS BIT)
+	ELSE
+			SELECT CAST(0 AS BIT)
+END
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------
+
+USE [SCHOOL_MANAGER]
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Leonardo Leal
+-- Create date: <08/11/2023>
+-- Description:	INSERT NEW CLASS
+-- =============================================
+CREATE PROCEDURE [PRC_CLASS_CREATE]
+(
+	@CLASSNAME VARCHAR(MAX),
+	@TERM INT
+)
+AS
+BEGIN
+
+	IF EXISTS (SELECT ID_CLASS FROM CLASS WHERE CLASS = @CLASSNAME AND ACTIVE = 1)
+			SELECT 'TURMA JÁ CADASTRADA'
+	ELSE
+			INSERT INTO CLASS (CLASS, ID_TERM) VALUES (@CLASSNAME, @TERM)
+			SELECT 'TURMA CRIADA COM SUCESSO'
+END
+
+-------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------
+
+USE [SCHOOL_MANAGER]
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Leonardo Leal
+-- Create date: <08/11/2023>
+-- Description:	INSERT NEW STUDENT
+-- =============================================
+CREATE PROCEDURE [PRC_STUDENT_CREATE]
+(
+	@NAME_STUDENT VARCHAR(MAX),
+	@CPF VARCHAR(MAX),
+	@AGE INT = 0,
+	@BIRTH DATE,
+	@ID_CLASS INT,
+	@OBSERVATIONS VARCHAR(MAX) = 'NENHUMA OBSERVAÇÃO CADASTRADA!'
+)
+AS
+BEGIN
+	IF EXISTS (SELECT ID_STUDENT FROM STUDENT WHERE NAME_STUDENT = @NAME_STUDENT AND CPF = @CPF AND  ID_CLASS = @ID_CLASS AND ACTIVE = 1)
+			SELECT 'ALUNO(A) JÁ CADASTRADO(A)'
+	ELSE
+			INSERT INTO STUDENT (NAME_STUDENT, CPF, AGE, BIRTH, ID_CLASS, OBSERVATIONS) VALUES (@NAME_STUDENT, @CPF, @AGE, @BIRTH, @ID_CLASS, @OBSERVATIONS)
+			SELECT 'ALUNO(A) CRIADO(A) COM SUCESSO'
+
+END
+-------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------
+
+USE [SCHOOL_MANAGER]
+GO
+/****** Object:  StoredProcedure [dbo].[PRC_ATTENDANT_CREATE]    Script Date: 19/08/2023 16:41:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Leonardo Leal
+-- Create date: <08/11/2023>
+-- Description:	INSERT NEW ATTENDANT
+-- =============================================
+CREATE PROCEDURE [dbo].[PRC_ATTENDANT_CREATE]
+(
+	@TITLE VARCHAR(MAX),
+	@DATE_OF_ATTENDANT DATE,
+	@ID_CLASS INT,
+	@OBSERVATIONS VARCHAR(MAX) = 'NENHUMA OBSERVAÇÃO CADASTRADA!'
+)
+AS
+BEGIN
+
+			-- VERIFYING TEMPORARY TABLE, IF NOT EXISTS WE CONTINUE, IF EXISTS WE DROP TO CREATE A NEW TABLE
+			IF OBJECT_ID('tempdb..##TMP_ID')			
+				IS NOT NULL DROP TABLE ##TMP_ID
+			-- TEMP (TEMPORARY) TABLE CREATION
+			CREATE TABLE ##TMP_ID (ID INT)
+
+			-- INSERT
+			INSERT INTO ATTENDANT (TITLE, DATE_OF_ATTENDANT, ID_CLASS, OBSERVATIONS)
+			OUTPUT INSERTED.ID_ATTENDANT -- GET INSERTED ID  
+			INTO ##TMP_ID -- SAVING INTO TEMP TABLE
+			VALUES (@TITLE, @DATE_OF_ATTENDANT, @ID_CLASS, @OBSERVATIONS)
+
+			-- INSERT TO AUXILIAR TABLE
+			INSERT INTO  ATTENDANT_STUDENT (ID_ATTENDANT, ID_STUDENT, IS_HERE)
+			SELECT   (SELECT ID FROM ##TMP_ID)
+				   , ID_STUDENT
+				   , 0
+			FROM STUDENT
+			WHERE ID_CLASS = 1-- @ID_CLASS
+
+			SELECT ID FROM ##TMP_ID
+
+END
+-------------------------------------------------------------------------------------------------------------------

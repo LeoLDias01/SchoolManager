@@ -14,17 +14,24 @@ namespace SchoolManager.Views
 {
     public partial class StudentSettings : Form
     {
+        #region ..:: Instances and Variables ::..
         Service service = new Service();
         Student student = new Student();
+        #endregion
 
+        #region ..:: Constructor ::..
         public StudentSettings(int id = 0)
         {
             InitializeComponent();
+            // Saving id
             student.Id = id;
         }
+        #endregion
 
+        #region ..:: Events ::..
         private void btnClear_Click(object sender, EventArgs e)
         {
+            // Cleaning all fields
             txtName.Text = string.Empty;
             txtCPF.Text = string.Empty;
             txtAge.Text = string.Empty;
@@ -35,10 +42,13 @@ namespace SchoolManager.Views
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            // Check if fields are correct
             if (FieldValidation())
             {
+                // Value attribution to properties
                 ValueAttribution();
 
+                // Checking if is a alteration or creation
                 if (student.Id > 0)
                     service.StudentAlter(student);
                 else
@@ -52,16 +62,22 @@ namespace SchoolManager.Views
 
         private void StudentSettings_Load(object sender, EventArgs e)
         {
+            // Fill ComboBox
             FillClassCombo();
             if (student.Id > 0)
-                LoadStudentData();
+                LoadStudentData(); // Search Students data to fill fields 
         }
+        #endregion
+
+        #region ..:: Other Methods ::..
         private void FillClassCombo()
         {
+            // Fill ComboBox
             service.FillClassCombo(ref cmbClass);
         }
         private void LoadStudentData()
         {
+            // Search Students data to fill fields
             List<Student> classroom = service.LoadStudentData(student.Id);
             foreach (var item in classroom)
             {
@@ -77,6 +93,10 @@ namespace SchoolManager.Views
                 cmbClass.SelectedValue = item.ClassId;
             }
         }
+        /// <summary>
+        /// Checking Fields
+        /// </summary>
+        /// <returns>return true or false if is correct or not</returns>
         private bool FieldValidation()
         {
             if (txtName.Text.Length > 1 && txtCPF.Text.Length > 1 && cmbClass.SelectedIndex > 0 && dtpBirth.Checked == true)
@@ -86,6 +106,7 @@ namespace SchoolManager.Views
         }
         private void ValueAttribution()
         {
+            // Cleaning fields
             student.Name = txtName.Text;
             student.CPF = txtCPF.Text;
             student.Age = Convert.ToInt32(txtAge.Text);
@@ -93,5 +114,6 @@ namespace SchoolManager.Views
             student.Birth = dtpBirth.Value;
             student.ClassId = Convert.ToInt32(cmbClass.SelectedValue);
         }
+        #endregion
     }
 }

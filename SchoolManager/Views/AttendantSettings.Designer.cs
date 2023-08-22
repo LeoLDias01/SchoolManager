@@ -33,6 +33,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AttendantSettings));
             this.customPanel1 = new SchoolManager.Components.CustomPanel();
             this.dgvIsHere = new System.Windows.Forms.DataGridView();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colIdStudent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStudent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMark = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.label4 = new System.Windows.Forms.Label();
             this.txtObservation = new System.Windows.Forms.TextBox();
             this.dtpDateOfAttendant = new System.Windows.Forms.DateTimePicker();
@@ -44,11 +48,6 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.cmbClass = new System.Windows.Forms.ComboBox();
-            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colIdStudent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStudent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colIsStudentHere = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMark = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.customPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvIsHere)).BeginInit();
             this.SuspendLayout();
@@ -105,17 +104,15 @@
             this.colId,
             this.colIdStudent,
             this.colStudent,
-            this.colIsStudentHere,
             this.colMark});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightCyan;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvIsHere.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvIsHere.Enabled = false;
             this.dgvIsHere.EnableHeadersVisualStyles = false;
             this.dgvIsHere.Location = new System.Drawing.Point(18, 213);
             this.dgvIsHere.Name = "dgvIsHere";
@@ -124,6 +121,42 @@
             this.dgvIsHere.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvIsHere.Size = new System.Drawing.Size(441, 460);
             this.dgvIsHere.TabIndex = 51;
+            this.dgvIsHere.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvIsHere_CellContentClick);
+            this.dgvIsHere.SelectionChanged += new System.EventHandler(this.dgvIsHere_SelectionChanged);
+            // 
+            // colId
+            // 
+            this.colId.DataPropertyName = "IdAttendantStudent";
+            this.colId.HeaderText = "Id";
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            this.colId.Visible = false;
+            // 
+            // colIdStudent
+            // 
+            this.colIdStudent.DataPropertyName = "IdStudent";
+            this.colIdStudent.HeaderText = "IdStudent";
+            this.colIdStudent.Name = "colIdStudent";
+            this.colIdStudent.ReadOnly = true;
+            this.colIdStudent.Visible = false;
+            // 
+            // colStudent
+            // 
+            this.colStudent.DataPropertyName = "Student";
+            this.colStudent.HeaderText = "Aluno";
+            this.colStudent.Name = "colStudent";
+            this.colStudent.ReadOnly = true;
+            // 
+            // colMark
+            // 
+            this.colMark.DataPropertyName = "IsHere";
+            this.colMark.FalseValue = "false";
+            this.colMark.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.colMark.HeaderText = "Presente";
+            this.colMark.IndeterminateValue = "false";
+            this.colMark.Name = "colMark";
+            this.colMark.ReadOnly = true;
+            this.colMark.TrueValue = "true";
             // 
             // label4
             // 
@@ -254,40 +287,6 @@
             this.cmbClass.Size = new System.Drawing.Size(312, 21);
             this.cmbClass.TabIndex = 3;
             // 
-            // colId
-            // 
-            this.colId.DataPropertyName = "Id";
-            this.colId.HeaderText = "Id";
-            this.colId.Name = "colId";
-            this.colId.ReadOnly = true;
-            this.colId.Visible = false;
-            // 
-            // colIdStudent
-            // 
-            this.colIdStudent.HeaderText = "IdStudent";
-            this.colIdStudent.Name = "colIdStudent";
-            this.colIdStudent.ReadOnly = true;
-            this.colIdStudent.Visible = false;
-            // 
-            // colStudent
-            // 
-            this.colStudent.HeaderText = "Aluno";
-            this.colStudent.Name = "colStudent";
-            this.colStudent.ReadOnly = true;
-            // 
-            // colIsStudentHere
-            // 
-            this.colIsStudentHere.HeaderText = "colIsStudentHere";
-            this.colIsStudentHere.Name = "colIsStudentHere";
-            this.colIsStudentHere.ReadOnly = true;
-            this.colIsStudentHere.Visible = false;
-            // 
-            // colMark
-            // 
-            this.colMark.HeaderText = "Presente";
-            this.colMark.Name = "colMark";
-            this.colMark.ReadOnly = true;
-            // 
             // AttendantSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -324,7 +323,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIdStudent;
         private System.Windows.Forms.DataGridViewTextBoxColumn colStudent;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colIsStudentHere;
         private System.Windows.Forms.DataGridViewCheckBoxColumn colMark;
     }
 }

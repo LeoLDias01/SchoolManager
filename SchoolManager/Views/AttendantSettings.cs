@@ -15,49 +15,83 @@ namespace SchoolManager.Views
 {
     public partial class AttendantSettings : Form
     {
+        #region ..:: Instances and Variables ::..
         Service service = new Service();
         AttendantData attendant = new AttendantData();
-        public AttendantSettings()
+        #endregion
+
+        #region ..:: Constructor ..::
+        public AttendantSettings(int id = 0)
         {
             InitializeComponent();
+            attendant.Id = id;
         }
+        #endregion
 
+        #region ..:: Events ::..
         private void btnClear_Click(object sender, EventArgs e)
         {
+            // Cleaning fields
             txtTitle.Text = string.Empty;
             txtObservation.Text = string.Empty;
             dtpDateOfAttendant.Checked = false;
             cmbClass.SelectedIndex = 0;
             dgvIsHere.DataSource = null;
-        }
-        private void FillClassCombo()
-        {
-            service.FillClassCombo(ref cmbClass);
-        }
+            attendant = new AttendantData();
+            attendant.Id = 0;
 
+        }
         private void AttendantSettings_Load(object sender, EventArgs e)
         {
+            // Fill combo
             FillClassCombo();
             if (attendant.Id > 0)
-                LoadStudentData();
+                LoadStudentData(); // Get Data
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            // Fields value validation
             if (FieldValidation())
             {
+                // Values attribution
                 ValueAttribution();
 
                 if (attendant.Id > 0)
-                    service.AttendantAlter(attendant);
+                    service.AttendantAlter(attendant); // Alteration Routine
                 else
-                    attendant.Id = service.AttendantCreate(attendant);
+                    attendant.Id = service.AttendantCreate(attendant); // Creation Routine
 
                 cmbClass.Enabled = false;
+                // fill datagrid
                 GetStudents();
             }
             else
                 MessageBox.Show("Campos Inválidos", "AVISO!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        private void dgvIsHere_SelectionChanged(object sender, EventArgs e)
+        {
+            // Searching Id in selected line
+            DataGridViewRow ActualLine = dgvIsHere.CurrentRow;
+            int row = ActualLine.Index;
+            attendant.IdAttendantStudent = Convert.ToInt32(dgvIsHere.Rows[row].Cells[colId.Index].Value);
+            attendant.IdStudent = Convert.ToInt32(dgvIsHere.Rows[row].Cells[colIdStudent.Index].Value);
+        }
+        private void dgvIsHere_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == dgvIsHere.Columns["colMark"].Index)
+            {
+                // Saving Values
+                service.AttendantCheck(attendant);
+            }
+            GetStudents();
+        }
+        #endregion
+
+        #region ..:: Other Methods ::..
+        private void FillClassCombo()
+        {
+            service.FillClassCombo(ref cmbClass);
         }
         private bool FieldValidation()
         {
@@ -96,5 +130,6 @@ namespace SchoolManager.Views
             dgvIsHere.AutoGenerateColumns = false;
             dgvIsHere.DataSource = service.GetStudents(attendant.Id);
         }
+        #endregion 
     }
 }
